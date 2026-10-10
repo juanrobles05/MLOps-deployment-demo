@@ -8,3 +8,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 .vscode/
+
+# Python tooling
+.pytest_cache/
+.ruff_cache/
+
+# Entrenamiento y modelos locales
+models/
+data/processed/
+reports/
+*.joblib
+
+# MLflow local tracking
+mlruns/
+mlflow.db
+mlartifacts/
+
+# Docker
+.docker/
