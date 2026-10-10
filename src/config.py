@@ -16,6 +16,7 @@ SEED = 42
 
 # Nombre de la variable objetivo
 TARGET = "Churn"
+REGISTERED_MODEL_NAME = "TelcoChurnModel"
 
 NUMERIC_FEATURES = [
     "SeniorCitizen",

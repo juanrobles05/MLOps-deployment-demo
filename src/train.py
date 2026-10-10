@@ -14,8 +14,8 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-import config
-from data import load_data
+from . import config
+from .data import load_data
 
 
 def create_pipeline(model):
@@ -29,7 +29,7 @@ def create_pipeline(model):
 
 def main():
     data = load_data()
-    X = data[config.FEATURES]
+    X = data[config.FEATURES].copy()
     y = data[config.TARGET]
     X[config.NUMERIC_FEATURES] = X[config.NUMERIC_FEATURES].astype(float)
     X_train, X_test, y_train, y_test = train_test_split(
@@ -74,17 +74,26 @@ def main():
                 name="model",
                 signature=infer_signature(X_train, pipeline.predict_proba(X_train)[:, 1]),
                 serialization_format="skops",
-                skops_trusted_types=["sklearn.tree._tree.Tree"],
+                skops_trusted_types=[
+                    "sklearn.tree._tree.Tree",
+                    "sklearn.compose._column_transformer._RemainderColsList",
+                ],
             )
             results.append((scores.mean(), run.info.run_id, name, pipeline))
             print(f"{name}: CV AUC={scores.mean():.4f} | F1={f1:.4f}")
 
     best_auc, best_run_id, best_name, best_pipeline = max(results, key=lambda item: item[0])
+    version = mlflow.register_model(
+        f"runs:/{best_run_id}/model",
+        config.REGISTERED_MODEL_NAME,
+    )
     config.MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(best_pipeline, config.MODEL_PATH)
     config.METADATA_PATH.write_text(json.dumps({
         "model": best_name,
         "mlflow_run_id": best_run_id,
+        "registry_name": config.REGISTERED_MODEL_NAME,
+        "registry_version": int(version.version),
         "cv_auc": round(best_auc, 4),
     }))
     print(f"Mejor modelo: {best_name} | CV AUC={best_auc:.4f}")
