@@ -1,0 +1,10 @@
+# Solo lo necesario para SERVIR el modelo (imagen Docker más liviana).
+# scikit-learn, pandas y numpy deben coincidir con requirements.txt:
+# un modelo serializado solo es seguro de cargar con las mismas versiones.
+scikit-learn==1.6.1
+pandas==2.2.3
+numpy==2.2.6
+joblib==1.4.2
+fastapi==0.115.6
+uvicorn==0.34.0
+pydantic==2.10.5

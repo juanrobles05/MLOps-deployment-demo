@@ -1,0 +1,9 @@
+evidently==0.7.23
+fastapi==0.115.6
+joblib==1.4.2
+mlflow==3.17.0
+numpy==2.2.6
+pandas==2.2.3
+pydantic==2.10.5
+scikit-learn==1.6.1
+uvicorn==0.34.0
