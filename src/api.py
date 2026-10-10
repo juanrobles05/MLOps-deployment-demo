@@ -68,7 +68,7 @@ class Prediction(BaseModel):
 async def lifespan(app: FastAPI):
     # El modelo se carga una sola vez al arrancar, no en cada petición.
     if not MODEL_PATH.exists():
-        raise RuntimeError(f"No existe {MODEL_PATH}. Ejecuta primero `make train`.")
+        raise RuntimeError(f"No existe {MODEL_PATH}. Ejecuta primero `python -m src.train`.")
     app.state.model = joblib.load(MODEL_PATH)
     meta = json.loads(METADATA_PATH.read_text()) if METADATA_PATH.exists() else {}
     app.state.version = str(meta.get("registry_version", meta.get("model", "local")))
