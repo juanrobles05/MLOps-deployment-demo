@@ -18,7 +18,7 @@ from evidently import DataDefinition, Dataset, Report
 from evidently.presets import DataDriftPreset
 from sklearn.metrics import f1_score, recall_score, roc_auc_score
 
-import config
+from . import config
 
 AUC_DROP_ALERT = 0.05  # regla de decisión: caída de AUC que justifica reentrenar
 
