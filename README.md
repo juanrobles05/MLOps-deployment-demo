@@ -30,7 +30,7 @@ pip install -r requirements.txt
 El dataset predeterminado es `data/Telco-Customer-Churn.csv`.
 
 ```powershell
-python src/train.py
+python -m src.train
 ```
 
 El entrenamiento:
@@ -70,7 +70,7 @@ Ejecuta el entrenamiento al menos una vez para crear las particiones de datos.
 Después genera el reporte de drift:
 
 ```powershell
-python src/monitor.py
+python -m src.monitor
 ```
 
 Los resultados se guardan en:
@@ -89,7 +89,7 @@ El contenedor sirve la API y utiliza el modelo previamente entrenado. Por eso
 debes ejecutar el entrenamiento antes de construir la imagen:
 
 ```powershell
-python src/train.py
+python -m src.train
 docker build -t mlops-demo .
 docker run --rm -p 8000:8000 mlops-demo
 ```
@@ -124,7 +124,7 @@ notebooks/eda.ipynb
 │   ├── data.py
 │   ├── monitor.py
 │   └── train.py
-├── dockerfile
+├── Dockerfile
 ├── requirements.txt
 └── Makefile
 ```
